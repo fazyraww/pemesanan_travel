@@ -3,112 +3,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kuisioner Psikologi Interaktif</title>
+  <title>Semangat Nugas!</title>
   <style>
     body {
+      margin: 0;
+      padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #f9f9f9, #ffe0f0);
-      color: #333;
-      max-width: 800px;
-      margin: auto;
-      padding: 20px;
+      background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
-    h1, h2 {
-      color: #d63384;
+    .card {
+      background-color: #1e2a38;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      padding: 40px;
+      max-width: 600px;
       text-align: center;
+      position: relative;
     }
-    .question {
-      background: white;
-      border-radius: 10px;
-      padding: 15px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    h1 {
+      font-size: 2.5rem;
+      color: #00d8ff;
       margin-bottom: 20px;
     }
-    .question label {
-      display: block;
-      margin-bottom: 10px;
-      font-weight: 600;
+    p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #cde4f7;
     }
-    select {
-      width: 100%;
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+    .heart {
+      font-size: 3rem;
+      color: #ff4f81;
+      animation: beat 1s infinite;
+      margin: 20px 0;
     }
-    button {
-      display: block;
-      background-color: #d63384;
-      color: white;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin: 30px auto;
-      font-size: 16px;
+    @keyframes beat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
     }
-    #result {
-      margin-top: 40px;
-      background-color: #fff0f5;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: center;
+    .glow {
+      font-size: 0.95rem;
+      color: #888;
+      margin-top: 30px;
     }
   </style>
 </head>
 <body>
-  <h1>Kuisioner Psikologi Interaktif</h1>
-  <form id="quizForm">
-
-    <h2>MMPI Mini</h2>
-    <div class="question"><label>1. Saya sering merasa sedih tanpa alasan.</label><select name="mmpi"><option value="0">Tidak</option><option value="1">Ya</option></select></div>
-    <div class="question"><label>2. Saya merasa orang-orang berusaha menyakiti saya.</label><select name="mmpi"><option value="0">Tidak</option><option value="1">Ya</option></select></div>
-    <div class="question"><label>3. Saya sering merasa gugup tanpa sebab.</label><select name="mmpi"><option value="0">Tidak</option><option value="1">Ya</option></select></div>
-    <div class="question"><label>4. Saya sulit mempercayai orang lain.</label><select name="mmpi"><option value="0">Tidak</option><option value="1">Ya</option></select></div>
-    <div class="question"><label>5. Saya mendengar suara yang tidak didengar orang lain.</label><select name="mmpi"><option value="0">Tidak</option><option value="1">Ya</option></select></div>
-
-    <h2>BDI-5</h2>
-    <div class="question"><label>1. Saya merasa sedih</label><select name="bdi"><option value="0">Tidak pernah</option><option value="1">Kadang-kadang</option><option value="2">Cukup sering</option><option value="3">Hampir setiap hari</option></select></div>
-    <div class="question"><label>2. Saya merasa gagal</label><select name="bdi"><option value="0">Tidak</option><option value="1">Kadang-kadang</option><option value="2">Sering</option><option value="3">Selalu</option></select></div>
-    <div class="question"><label>3. Saya kehilangan minat terhadap hal yang biasa disukai</label><select name="bdi"><option value="0">Tidak</option><option value="1">Sedikit</option><option value="2">Cukup sering</option><option value="3">Selalu</option></select></div>
-    <div class="question"><label>4. Saya merasa tidak berharga</label><select name="bdi"><option value="0">Tidak</option><option value="1">Kadang-kadang</option><option value="2">Cukup sering</option><option value="3">Selalu</option></select></div>
-    <div class="question"><label>5. Saya ingin menyakiti diri sendiri</label><select name="bdi"><option value="0">Tidak pernah</option><option value="1">Jarang</option><option value="2">Sering</option><option value="3">Sangat sering</option></select></div>
-
-    <h2>SRQ-5</h2>
-    <div class="question"><label>1. Apakah Anda sering merasa cemas atau khawatir?</label><select name="srq"><option value="0">Tidak</option><option value="1">Ya</option></select></div>
-    <div class="question"><label>2. Apakah Anda mengalami kesulitan tidur?</label><select name="srq"><option value="0">Tidak</option><option value="1">Ya</option></select></div>
-    <div class="question"><label>3. Apakah Anda merasa lelah sepanjang waktu?</label><select name="srq"><option value="0">Tidak</option><option value="1">Ya</option></select></div>
-    <div class="question"><label>4. Apakah Anda merasa sedih berkepanjangan?</label><select name="srq"><option value="0">Tidak</option><option value="1">Ya</option></select></div>
-    <div class="question"><label>5. Apakah Anda sering kehilangan minat terhadap kegiatan sehari-hari?</label><select name="srq"><option value="0">Tidak</option><option value="1">Ya</option></select></div>
-
-    <button type="button" onclick="hitungHasil()">Lihat Hasil</button>
-  </form>
-
-  <div id="result"></div>
-
-  <script>
-    function hitungHasil() {
-      const form = document.forms['quizForm'];
-
-      let mmpi = 0, bdi = 0, srq = 0;
-      const mmpiEls = form.querySelectorAll('select[name="mmpi"]');
-      const bdiEls = form.querySelectorAll('select[name="bdi"]');
-      const srqEls = form.querySelectorAll('select[name="srq"]');
-
-      mmpiEls.forEach(e => mmpi += parseInt(e.value));
-      bdiEls.forEach(e => bdi += parseInt(e.value));
-      srqEls.forEach(e => srq += parseInt(e.value));
-
-      const mmpiKet = mmpi >= 4 ? 'Gejala berat' : mmpi >= 2 ? 'Gejala ringan' : 'Normal';
-      const bdiKet = bdi >= 12 ? 'Depresi berat' : bdi >= 8 ? 'Depresi sedang' : bdi >= 5 ? 'Depresi ringan' : 'Normal';
-      const srqKet = srq >= 4 ? 'Kemungkinan gangguan psikologis' : srq >= 2 ? 'Perlu perhatian' : 'Normal';
-
-      document.getElementById('result').innerHTML = `
-        <h2>Hasil Interpretasi</h2>
-        <p><strong>Skor MMPI:</strong> ${mmpi} → ${mmpiKet}</p>
-        <p><strong>Skor BDI:</strong> ${bdi} → ${bdiKet}</p>
-        <p><strong>Skor SRQ:</strong> ${srq} → ${srqKet}</p>
-      `;
-    }
-  </script>
+  <div class="card">
+    <h1>Semangat Nugas, Pejuang Hebat!</h1>
+    <p>Aku tahu tugas bisa bikin lelah, tapi aku tahu kamu itu keren dan bisa banget ngelewatin semua ini.</p>
+    <p>Langkah kecilmu hari ini itu bukti kamu nggak menyerah. Dan aku selalu ada di sini buat dukung kamu terus 💪</p>
+    <div class="heart">❤️</div>
+    <p>Kalau capek, tarik napas, istirahat sebentar. Kamu nggak harus sempurna, cukup terus maju — aku bangga banget punya kamu!</p>
+    <div class="glow">- dari seseorang yang percaya penuh padamu 🌌</div>
+  </div>
 </body>
 </html>
