@@ -1,0 +1,64 @@
+{% extends "travel/base.html" %}
+{% load static %}
+
+{% block title %}Pesan {{ perjalanan.tujuan }}{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto bg-white p-8 rounded-xl shadow-2xl border border-indigo-100">
+    <h1 class="text-3xl font-bold text-indigo-700 mb-2">Pesan: {{ perjalanan.tujuan }}</h1>
+    <p class="text-gray-600 mb-6">Harga per orang: <span class="text-lg font-bold text-green-600">Rp {{ perjalanan.harga|floatformat:0 }}</span></p>
+
+    <!-- Tampilkan pesan error jika ada -->
+    {% if messages %}
+        <div class="mb-4 p-3 rounded-lg bg-red-100 text-red-700 border border-red-200">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="post" class="space-y-6">
+        {% csrf_token %}
+        
+        <div>
+            <label for="{{ form.nama_pelanggan.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                Nama Lengkap
+            </label>
+            <div class="mt-1">
+                {{ form.nama_pelanggan }}
+                {% if form.nama_pelanggan.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ form.nama_pelanggan.errors }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div>
+            <label for="{{ form.jumlah_orang.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                Jumlah Orang (Minimal 1)
+            </label>
+            <div class="mt-1">
+                {{ form.jumlah_orang }}
+                {% if form.jumlah_orang.errors %}
+                    <p class="text-red-500 text-xs mt-1">{{ form.jumlah_orang.errors }}</p>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Field tersembunyi untuk ID perjalanan -->
+        {{ form.perjalanan }} 
+        
+        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150">
+            Konfirmasi Pemesanan
+        </button>
+    </form>
+</div>
+
+<!-- Styling untuk input form agar terlihat bagus dengan Tailwind -->
+<style>
+    input[type="text"], input[type="number"] {
+        /* Gabungkan properti CSS dasar di sini */
+        /* Catatan: IDE mungkin tidak sepenuhnya mengenali @apply Tailwind CSS di dalam <style> tag */
+        @apply w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500 transition duration-150;
+    }
+</style>
+{% endblock content %}
