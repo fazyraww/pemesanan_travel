@@ -1,12 +1,8 @@
-from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
+from . import views
 
+# PERBAIKI: Mengganti list_perjalanan dengan daftar_perjalanan
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    
-    # Rute untuk Web Views
-    path('travel/', include('travel.urls')), 
-    
-    # Rute untuk API, menunjuk ke file API yang baru
-    path('api/', include('travel.api_urls')), 
+    path('', views.daftar_perjalanan, name='list_perjalanan'), # <-- SUDAH DIKOREKSI
+    # Jika ada path lain, tambahkan di sini...
 ]

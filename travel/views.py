@@ -1,3 +1,15 @@
+from django.http import JsonResponse
+from .models import Perjalanan  # Pastikan model ada
+
+# Fungsi untuk web view (sudah ada)
+def daftar_perjalanan(request):
+    # Kode Anda yang sudah ada, misalnya render template
+    pass
+
+# Tambahkan ini untuk API
+def daftar_perjalanan_api(request):
+    perjalanan_list = Perjalanan.objects.all().values('id', 'nama', 'harga')  # Sesuaikan field model
+    return JsonResponse(list(perjalanan_list), safe=False)
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 # Pastikan mengimpor model yang benar (Perjalanan, Pemesanan, Ulasan)
