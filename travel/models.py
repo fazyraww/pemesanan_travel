@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Avg
 
+
 class Perjalanan(models.Model):
     """Model yang merepresentasikan satu paket perjalanan (Trip)."""
     tujuan = models.CharField(max_length=100)
