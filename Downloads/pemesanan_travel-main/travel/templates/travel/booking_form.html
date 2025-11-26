@@ -1,0 +1,60 @@
+{% extends "travel/base.html" %}
+{% load humanize %} 
+<!-- Memuat humanize lagi untuk format harga, meskipun tidak wajib di sini -->
+
+{% block title %}Pesan {{ perjalanan.tujuan }}{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto bg-white p-8 rounded-xl shadow-2xl border border-indigo-100">
+    <h1 class="text-3xl font-bold text-indigo-700 mb-2">Pesan: {{ perjalanan.tujuan }}</h1>
+    
+    <div class="mb-6 pb-4 border-b">
+        <p class="text-sm text-gray-500">Tanggal: {{ perjalanan.tgl_berangkat|date:"d M Y" }} - {{ perjalanan.tgl_kembali|date:"d M Y" }}</p>
+        <p class="text-gray-600">Harga per orang: <span class="text-2xl font-extrabold text-green-600">Rp {{ perjalanan.harga|floatformat:0|intcomma }}</span></p>
+    </div>
+
+    <!-- Menampilkan pesan sukses/error dari View -->
+    {% if messages %}
+        <div class="mb-4">
+            {% for message in messages %}
+                <div class="p-3 rounded-lg {% if message.tags == 'success' %}bg-green-100 text-green-700 border border-green-200{% else %}bg-red-100 text-red-700 border border-red-200{% endif %}">
+                    <p>{{ message }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="post" class="space-y-6">
+        {% csrf_token %}
+        
+        <!-- Field Nama Lengkap -->
+        <div class="space-y-1">
+            <label for="{{ form.nama_pelanggan.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                Nama Lengkap
+            </label>
+            {{ form.nama_pelanggan }}
+            {% if form.nama_pelanggan.errors %}
+                <p class="text-red-500 text-xs mt-1">{{ form.nama_pelanggan.errors.0 }}</p>
+            {% endif %}
+        </div>
+
+        <!-- Field Jumlah Orang -->
+        <div class="space-y-1">
+            <label for="{{ form.jumlah_orang.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                Jumlah Orang (Minimal 1)
+            </label>
+            {{ form.jumlah_orang }}
+            {% if form.jumlah_orang.errors %}
+                <p class="text-red-500 text-xs mt-1">{{ form.jumlah_orang.errors.0 }}</p>
+            {% endif %}
+        </div>
+        
+        <!-- Field tersembunyi untuk ID perjalanan (disediakan oleh forms.py) -->
+        {{ form.perjalanan }} 
+        
+        <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-lg font-bold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150">
+            Konfirmasi & Proses Pembayaran
+        </button>
+    </form>
+</div>
+{% endblock content %}

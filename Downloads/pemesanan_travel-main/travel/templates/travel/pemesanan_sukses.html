@@ -1,0 +1,45 @@
+{% extends "travel/base.html" %}
+{% load static %}
+
+{% block title %}Pemesanan Berhasil!{% endblock %}
+
+{% block content %}
+
+<div class="max-w-xl mx-auto mt-10 p-10 bg-white rounded-2xl shadow-2xl border-t-8 border-green-500 text-center">
+
+<!-- Icon Konfirmasi Sukses -->
+<svg class="mx-auto h-16 w-16 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+</svg>
+
+<h1 class="text-3xl font-extrabold text-gray-800 mt-4 mb-2">Pemesanan Berhasil Dikonfirmasi!</h1>
+
+<!-- Menampilkan pesan sukses dari Django Messages -->
+{% if messages %}
+    <div class="mb-6 text-lg text-green-700 font-medium">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% else %}
+    <!-- Pesan fallback jika diakses langsung tanpa redirect messages -->
+    <p class="mb-6 text-lg text-green-700 font-medium">
+        Terima kasih! Pemesanan Anda telah berhasil diproses.
+    </p>
+{% endif %}
+
+<p class="text-gray-600 mb-8">
+    Kami akan segera menghubungi Anda untuk detail pembayaran dan informasi keberangkatan.
+</p>
+
+<div class="space-y-4">
+    <!-- Tombol untuk kembali ke daftar perjalanan -->
+    <a href="{% url 'travel_web:daftar_perjalanan' %}" 
+       class="inline-flex items-center justify-center py-3 px-6 border border-transparent rounded-lg shadow-md text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150">
+        Lihat Paket Perjalanan Lain
+    </a>
+</div>
+
+
+</div>
+{% endblock content %}

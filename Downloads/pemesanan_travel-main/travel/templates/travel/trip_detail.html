@@ -1,0 +1,40 @@
+{% extends "travel/base.html" %}
+{% load humanize %}
+
+{% block title %}Daftar Paket Perjalanan{% endblock %}
+
+{% block content %}
+    <div class="bg-white p-8 rounded-xl shadow-2xl border border-indigo-100">
+        <h1 class="text-3xl font-bold text-indigo-700 mb-6 text-center">Pemesanan Travel - Daftar Perjalanan</h1>
+
+        {% if perjalanan_list %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for perjalanan in perjalanan_list %}
+                <div class="trip-card bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
+                    <h2 class="text-2xl font-semibold text-indigo-600 mb-2">{{ perjalanan.tujuan }}</h2>
+                    <p class="text-gray-600 text-sm mb-3 h-12 overflow-hidden">{{ perjalanan.deskripsi|truncatechars:100 }}</p>
+                    <p class="text-xs text-gray-500">Berangkat: <span class="font-medium">{{ perjalanan.tgl_berangkat|date:"d F Y" }}</span></p>
+                    <p class="text-xs text-gray-500 mb-4">Kembali: <span class="font-medium">{{ perjalanan.tgl_kembali|date:"d F Y" }}</span></p>
+                    
+                    <div class="price text-xl font-bold text-green-600 mb-4">
+                        Rp {{ perjalanan.harga|floatformat:0|intcomma }}
+                        <span class="text-sm font-normal text-gray-500">/ orang</span>
+                    </div>
+                    
+                    <!-- Tautan ke Halaman Detail (dan Pemesanan) -->
+                    <a href="{% url 'trip_detail' pk=perjalanan.pk %}" class="w-full inline-flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-500 hover:bg-indigo-600 transition duration-150">
+                        Lihat Detail & Pesan →
+                    </a>
+                </div>
+            {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center text-gray-500 py-10">Belum ada paket perjalanan yang tersedia.</p>
+        {% endif %}
+
+        <!-- Tautan API (di luar card) -->
+        <a href="/api/perjalanan/" class="api-link mt-8 w-full inline-block text-center py-3 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-600 transition duration-150 shadow-md">
+            Akses API Daftar Perjalanan (untuk Thunder Client)
+        </a>
+    </div>
+{% endblock content %}
