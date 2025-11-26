@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% load humanize %}
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Paket Perjalanan</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; background-color: #f4f4f9; }
+        .container { max-width: 900px; margin: auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1 { color: #007bff; text-align: center; margin-bottom: 30px; }
+        .trip-card { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 6px; transition: box-shadow 0.3s ease; }
+        .trip-card:hover { box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2); }
+        .trip-card h2 { margin-top: 0; color: #333; }
+        .price { font-weight: bold; color: #28a745; margin-top: 10px; }
+        .api-link { display: block; text-align: center; margin-top: 30px; padding: 10px; background-color: #ffc107; color: #333; text-decoration: none; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pemesanan Travel - Daftar Perjalanan</h1>
+
+        {% if perjalanan_list %}
+            {% for perjalanan in perjalanan_list %}
+                <div class="trip-card">
+                    <h2>{{ perjalanan.tujuan }}</h2>
+                    <p>{{ perjalanan.deskripsi|truncatechars:150 }}</p>
+                    <p>Berangkat: {{ perjalanan.tgl_berangkat|date:"d F Y" }}</p>
+                    <p>Kembali: {{ perjalanan.tgl_kembali|date:"d F Y" }}</p>
+                    <p class="price">Harga per orang: Rp {{ perjalanan.harga|floatformat:0|intcomma }}</p>
+                    
+                    <!-- Tautan ke Halaman Detail (dan Pemesanan) -->
+                    <a href="{% url 'trip_detail' pk=perjalanan.pk %}" style="color: #007bff; text-decoration: none;">Lihat Detail & Pemesanan →</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p style="text-align: center;">Belum ada paket perjalanan yang tersedia.</p>
+        {% endif %}
+
+        <!-- Tautan yang diminta dosen Anda untuk API -->
+        <a href="/api/perjalanan/" class="api-link">Akses API Daftar Perjalanan (untuk Thunder Client)</a>
+    </div>
+</body>
+</html>

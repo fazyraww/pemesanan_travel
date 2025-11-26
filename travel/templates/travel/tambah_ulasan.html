@@ -1,0 +1,76 @@
+{% extends "travel/base.html" %}
+{% load static %}
+
+{% block title %}Tulis Ulasan untuk {{ perjalanan.tujuan }}{% endblock %}
+
+{% block content %}
+
+<div class="max-w-xl mx-auto bg-white p-8 rounded-xl shadow-2xl border border-blue-100 mt-10">
+<h1 class="text-3xl font-extrabold text-blue-800 mb-2">Tulis Ulasan</h1>
+<h2 class="text-2xl font-semibold text-blue-600 mb-6 border-b pb-4">
+Destinasi: {{ perjalanan.tujuan }}
+</h2>
+
+<!-- Tampilkan pesan error jika ada -->
+{% if messages %}
+    <div class="mb-6 p-4 rounded-xl bg-red-100 text-red-700 border border-red-200">
+        <h3 class="font-semibold mb-1">Terjadi Kesalahan:</h3>
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<form method="post" class="space-y-6">
+    {% csrf_token %}
+    
+    <!-- Nama Reviewer -->
+    <div>
+        <label for="{{ form.nama_reviewer.id_for_label }}" class="block text-sm font-medium text-gray-700">
+            Nama Anda
+        </label>
+        <div class="mt-1">
+            {{ form.nama_reviewer }}
+            {% if form.nama_reviewer.errors %}
+                <p class="text-red-500 text-xs mt-1">{{ form.nama_reviewer.errors }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Rating (1-5) -->
+    <div>
+        <label for="{{ form.rating.id_for_label }}" class="block text-sm font-medium text-gray-700">
+            Rating (Skala 1 - 5)
+        </label>
+        <div class="mt-1">
+            {{ form.rating }}
+            {% if form.rating.errors %}
+                <p class="text-red-500 text-xs mt-1">{{ form.rating.errors }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Komentar/Ulasan -->
+    <div>
+        <label for="{{ form.komentar.id_for_label }}" class="block text-sm font-medium text-gray-700">
+            Komentar Anda
+        </label>
+        <div class="mt-1">
+            {{ form.komentar }}
+            {% if form.komentar.errors %}
+                <p class="text-red-500 text-xs mt-1">{{ form.komentar.errors }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Field tersembunyi untuk ID perjalanan (diisi otomatis oleh view) -->
+    {{ form.perjalanan }} 
+    
+    <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150">
+        Kirim Ulasan
+    </button>
+</form>
+
+
+</div>
+{% endblock content %}

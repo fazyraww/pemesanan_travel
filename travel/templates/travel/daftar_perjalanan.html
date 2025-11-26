@@ -1,0 +1,84 @@
+{% extends "travel/base.html" %}
+{% load static %}
+
+{% block title %}Jelajahi Paket Perjalanan Terbaik{% endblock %}
+
+{% block content %}
+
+<div class="container mx-auto px-4 py-12">
+<h1 class="text-4xl font-extrabold text-gray-900 text-center mb-4">
+Destinasi Impian Anda
+</h1>
+<p class="text-xl text-indigo-600 text-center mb-10">
+Pilih petualangan Anda berikutnya.
+</p>
+
+<!-- Pengecekan apakah ada data perjalanan yang tersedia -->
+{% if daftar_perjalanan %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        
+        {% for perjalanan in daftar_perjalanan %}
+        
+        <!-- Travel Card -->
+        <div class="bg-white rounded-xl shadow-xl overflow-hidden transform hover:scale-[1.03] transition duration-300 ease-in-out border-t-4 border-indigo-500">
+            
+            <!-- Placeholder Gambar (Ganti dengan URL gambar asli jika tersedia) -->
+            <img src="https://placehold.co/600x400/818CF8/FFFFFF?text={{ perjalanan.tujuan }}" 
+                 alt="Gambar Destinasi {{ perjalanan.tujuan }}" 
+                 class="w-full h-48 object-cover">
+            
+            <div class="p-6">
+                <!-- Tujuan -->
+                <h2 class="text-2xl font-bold text-indigo-800 mb-2 truncate">
+                    {{ perjalanan.tujuan }}
+                </h2>
+                
+                <!-- Deskripsi Singkat -->
+                <p class="text-gray-600 text-sm mb-4 line-clamp-3">
+                    {{ perjalanan.deskripsi|truncatechars:100 }}
+                </p>
+                
+                <!-- Detail Harga dan Durasi -->
+                <div class="flex justify-between items-center mb-4 border-t pt-3">
+                    <div>
+                        <span class="text-sm font-semibold text-gray-500 block">Harga Mulai Dari:</span>
+                        <span class="text-xl font-extrabold text-green-600">
+                            Rp {{ perjalanan.harga|floatformat:0 }}
+                        </span>
+                        <span class="text-sm text-gray-500">/ orang</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-sm font-semibold text-gray-500 block">Durasi:</span>
+                        <span class="text-lg font-bold text-indigo-500">
+                            {{ perjalanan.durasi }} Hari
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Tombol Lihat Detail -->
+                <a href="{% url 'travel_web:detail_perjalanan' pk=perjalanan.pk %}" 
+                   class="w-full inline-block text-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150">
+                    Lihat Detail & Pesan
+                </a>
+            </div>
+        </div>
+        <!-- End Travel Card -->
+        
+        {% endfor %}
+        
+    </div>
+{% else %}
+    <!-- Pesan jika tidak ada perjalanan tersedia -->
+    <div class="text-center p-10 border-2 border-dashed border-gray-300 rounded-xl bg-gray-50">
+        <p class="text-xl text-gray-500 font-medium">
+            Maaf, saat ini belum ada paket perjalanan yang tersedia.
+        </p>
+        <p class="text-gray-400 mt-2">
+            Silakan cek kembali nanti atau hubungi layanan pelanggan.
+        </p>
+    </div>
+{% endif %}
+
+
+</div>
+{% endblock content %}
