@@ -1,40 +1,54 @@
-{% extends "travel/base.html" %}
-{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Detail Perjalanan</title>
+    <!-- Tambahkan link Bootstrap jika halaman awal pakai (atau CSS custom) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* CSS tambahan untuk rapi (sesuaikan dengan halaman awal) */
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .card { margin-bottom: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        .btn { background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; }
+        .btn:hover { background-color: #0056b3; }
+        ul { list-style-type: none; padding: 0; }
+        li { margin-bottom: 10px; padding: 10px; background-color: #f8f9fa; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Detail Perjalanan (mirip card di halaman awal) -->
+        <div class="card">
+            <h1>{{ perjalanan.tujuan }}</h1>
+            <p>{{ perjalanan.deskripsi }}</p>
+            <p><strong>Berangkat:</strong> {{ perjalanan.tgl_berangkat|date:"M d, Y" }}</p>
+            <p><strong>Kembali:</strong> {{ perjalanan.tgl_kembali|date:"M d, Y" }}</p>
+            <p><strong>Harga per orang:</strong> Rp {{ perjalanan.harga|floatformat:0 }}</p>
+        </div>
 
-{% block title %}Daftar Paket Perjalanan{% endblock %}
+        <!-- Daftar Pemesanan -->
+        <div class="card">
+            <h2>Daftar Pemesanan</h2>
+            {% if pemesanan_list %}
+                <ul>
+                    {% for pemesanan in pemesanan_list %}
+                        <li>
+                            <strong>Nama Pelanggan:</strong> {{ pemesanan.nama_pelanggan }}<br>
+                            <strong>Jumlah Orang:</strong> {{ pemesanan.jumlah_orang }}<br>
+                            <strong>Tanggal Pemesanan:</strong> {{ pemesanan.tgl_pemesanan|date:"M d, Y H:i" }}<br>
+                            <strong>Total Harga:</strong> Rp {{ pemesanan.total_harga|floatformat:0 }}<br>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Belum ada pemesanan untuk perjalanan ini.</p>
+            {% endif %}
+        </div>
 
-{% block content %}
-    <div class="bg-white p-8 rounded-xl shadow-2xl border border-indigo-100">
-        <h1 class="text-3xl font-bold text-indigo-700 mb-6 text-center">Pemesanan Travel - Daftar Perjalanan</h1>
-
-        {% if perjalanan_list %}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {% for perjalanan in perjalanan_list %}
-                <div class="trip-card bg-gray-50 p-6 rounded-xl shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
-                    <h2 class="text-2xl font-semibold text-indigo-600 mb-2">{{ perjalanan.tujuan }}</h2>
-                    <p class="text-gray-600 text-sm mb-3 h-12 overflow-hidden">{{ perjalanan.deskripsi|truncatechars:100 }}</p>
-                    <p class="text-xs text-gray-500">Berangkat: <span class="font-medium">{{ perjalanan.tgl_berangkat|date:"d F Y" }}</span></p>
-                    <p class="text-xs text-gray-500 mb-4">Kembali: <span class="font-medium">{{ perjalanan.tgl_kembali|date:"d F Y" }}</span></p>
-                    
-                    <div class="price text-xl font-bold text-green-600 mb-4">
-                        Rp {{ perjalanan.harga|floatformat:0|intcomma }}
-                        <span class="text-sm font-normal text-gray-500">/ orang</span>
-                    </div>
-                    
-                    <!-- Tautan ke Halaman Detail (dan Pemesanan) -->
-                    <a href="{% url 'trip_detail' pk=perjalanan.pk %}" class="w-full inline-flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-500 hover:bg-indigo-600 transition duration-150">
-                        Lihat Detail & Pesan →
-                    </a>
-                </div>
-            {% endfor %}
-            </div>
-        {% else %}
-            <p class="text-center text-gray-500 py-10">Belum ada paket perjalanan yang tersedia.</p>
-        {% endif %}
-
-        <!-- Tautan API (di luar card) -->
-        <a href="/api/perjalanan/" class="api-link mt-8 w-full inline-block text-center py-3 px-4 border border-transparent rounded-lg text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-600 transition duration-150 shadow-md">
-            Akses API Daftar Perjalanan (untuk Thunder Client)
-        </a>
+        <!-- Tombol Kembali (mirip halaman awal) -->
+        <a href="{% url 'daftar_perjalanan' %}" class="btn">Kembali ke Daftar Perjalanan</a>
     </div>
-{% endblock content %}
+
+    <!-- Script Bootstrap jika diperlukan -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

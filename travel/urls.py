@@ -7,4 +7,5 @@ urlpatterns = [
     # Jika ada path lain, tambahkan di sini...
 
     path('detail/<int:pk>/', views.trip_detail, name='trip_detail')
+    
 ]
